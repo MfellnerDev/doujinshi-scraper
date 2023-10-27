@@ -30,8 +30,8 @@ def scrape_doujin(doujin_number):
 def _get_web_driver():
     """
     Initialize and return the selenium web driver.
-    Why am I using it for this case? Because nhentai.com doesn't accept plain requests from the "requests" library
-    + JavaScript and Cookies must be enabled.
+    Why am I using it for this case? Because nhentai.com doesn't accept plain requests from the "requests" library,
+    JavaScript and Cookies must be enabled.
     :return: web driver
     """
     options = Options()
@@ -54,6 +54,7 @@ def _get_doujin_slug(doujin_number: str, web_driver):
     """
     web_driver.get(f"{website_url}/g/{doujin_number}")
     url_with_slug = web_driver.current_url
+    print(url_with_slug)
     return url_with_slug.split("/")[5]
 
 
