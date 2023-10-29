@@ -6,6 +6,7 @@ from waitress import serve
 import os
 import json
 from bs4 import BeautifulSoup
+from helpers import create_dir_in_current_folder
 
 app = Flask(__name__)
 
@@ -75,21 +76,6 @@ def _parse_api_response_and_get_image_urls(response_content):
     return image_urls
 
 
-def _create_local_directory(doujin_slug: str):
-    """
-    Build the correct path for creating the [slug] directory in the same directory as the python file.
-    :param doujin_slug: name of directory
-    :return:
-    """
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    result_dir_path = os.path.join(current_dir, doujin_slug)
-    if not os.path.exists(result_dir_path):
-        os.mkdir(result_dir_path)
-    else:
-        raise ValueError("A directory with this slug already exists! Are you sure that the doujin wasn't downloaded "
-                         "already?")
-
-
 def _download_images(doujin_slug: str, web_driver):
     """
     Download all images from the img_urls list using the requests library (see explanation below)
@@ -101,7 +87,7 @@ def _download_images(doujin_slug: str, web_driver):
     web_driver.get(f"{img_server_url}/{doujin_slug}/images")
     img_urls = _parse_api_response_and_get_image_urls(web_driver.page_source)
 
-    _create_local_directory(doujin_slug)
+    create_dir_in_current_folder(doujin_slug)
 
     for image_url in img_urls:
         """
