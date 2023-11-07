@@ -102,7 +102,7 @@ def _download_images(doujin_slug: str, web_driver):
                 print(
                     f"Img download of {doujin_slug}: Saved img {image_url.split('/')[7]} into /{doujin_slug}/{current_img_filename}")
         else:
-            raise ConnectionError(f"Expected server response status code {response_image.status_code}, got "
+            raise ConnectionError(f"Expected server response status code 200, got "
                                   f"{response_image.status_code}. Aborting.")
     print(f"Finished downloading all images for {doujin_slug}.")
 
